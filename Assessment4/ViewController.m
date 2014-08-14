@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "DogsViewController.h"
 #import "Person.h"
 
 #define personEntity @"Person"
@@ -154,6 +155,18 @@
 	[self.myTableView reloadData];
 }
 
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+	if ([segue.identifier isEqualToString:toDogsSegue]) {
+		DogsViewController *dogsVC = segue.destinationViewController;
+		NSIndexPath *indexPathForSelectedRow = [self.myTableView indexPathForSelectedRow];
+		dogsVC.dogOwner = [self.fetchedResultsController objectAtIndexPath:indexPathForSelectedRow];
+	}
+
+}
+
 #pragma mark - Helper methods
 
 - (void)showAlertViewWithTitle:(NSString *)title message:(NSString *)message buttonText:(NSString *)buttonText
@@ -172,12 +185,7 @@
 	[self.managedObjectContext save:&saveError];
 
 	if (saveError) {
-		UIAlertView *alertView = [UIAlertView new];
-		alertView.title = @"Saving error";
-		alertView.message = saveError.localizedDescription;
-		[alertView addButtonWithTitle:@"OK"];
-		[alertView show];
-
+		[self showAlertViewWithTitle:@"Saving error" message:saveError.localizedDescription buttonText:@"OK"];
 		NSLog(@"Saving error: %@", saveError.localizedDescription);
 	}
 }

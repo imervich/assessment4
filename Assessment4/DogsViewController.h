@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class Person;
 @interface DogsViewController : UIViewController
 
 #define mmAddSegue @"AddDogSegue"
 #define mmDogCellIdentifier @"dogCell"
+
+@property Person *dogOwner;
 
 @end

@@ -13,5 +13,6 @@
 @property NSManagedObjectContext *managedObjectContext;
 
 #define mmCellIdentifier @"myCell"
+#define toDogsSegue @"toDogsSegue"
 
 @end

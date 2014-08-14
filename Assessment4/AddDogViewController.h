@@ -8,6 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@class Person;
+@class Dog;
+
+@protocol AddDogViewControllerDelegate
+
+- (void)addedDog:(Dog *)dog toPerson:(Person *)person;
+
+@end
+
 @interface AddDogViewController : UIViewController
+
+@property Person *dogOwner;
+@property id<AddDogViewControllerDelegate> delegate;
 
 @end
