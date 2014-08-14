@@ -44,7 +44,6 @@
 		[self showAlertViewWithTitle:@"User fetch error" message:fetchError.localizedDescription buttonText:@"OK"];
 	}
 
-
 	// load the color
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	NSData *colorData = [userDefaults objectForKey:@"savedColor"];
@@ -52,19 +51,6 @@
 		UIColor *savedColor = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
 		self.navigationController.navigationBar.tintColor = savedColor;
 	}
-
-
-//	NSDictionary *colorRGBA = [userDefaults objectForKey:@"savedColor"];
-
-//	if (colorRGBA) {
-//		CGFloat red = [colorRGBA[@"red"] floatValue];
-//		CGFloat green = [colorRGBA[@"green"] floatValue];
-//		CGFloat blue = [colorRGBA[@"blue"] floatValue];
-//		CGFloat alpha = [colorRGBA[@"alpha"] floatValue];
-//
-//		UIColor *savedColor = [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
-//		self.navigationController.navigationBar.tintColor = savedColor;
-//	}
 }
 
 #pragma mark - UITableViewDataSource Methods
@@ -139,24 +125,8 @@
 				colorToSave = [UIColor greenColor];
             }
 
-//		CGFloat red;
-//		CGFloat green;
-//		CGFloat blue;
-//		CGFloat alpha;
-
-//		UIColor *colorToSave = self.navigationController.navigationBar.tintColor;
-
-		// get the color's rgb values
-//		if ([colorToSave getRed:&red green:&green blue:&blue alpha:&alpha]) {
-//
-//			NSDictionary *colorRGBA = @{@"red": [NSNumber numberWithFloat:red],
-//									 @"green": [NSNumber numberWithFloat:green],
-//									 @"blue": [NSNumber numberWithFloat:blue],
-//									 @"alpha": [NSNumber numberWithFloat:alpha]};
-//
+		// save the color
 		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-		//			[userDefaults setObject:colorRGBA forKey:@"savedColor"];
-//		}
 		NSData *colorData = [NSKeyedArchiver archivedDataWithRootObject:colorToSave];
 		[userDefaults setObject:colorData forKey:@"savedColor"];
 		[userDefaults synchronize];
