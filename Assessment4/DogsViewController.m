@@ -16,8 +16,6 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *dogsTableView;
 
-//@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-
 @end
 
 @implementation DogsViewController
@@ -32,7 +30,6 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //TODO: UPDATE THIS ACCORDINGLY
     return self.dogOwner.dogs.count;
 }
 
@@ -66,16 +63,6 @@
 }
 
 #pragma mark - Helper methods
-
-//- (void)showAlertViewWithTitle:(NSString *)title message:(NSString *)message buttonText:(NSString *)buttonText
-//{
-//	UIAlertView *alertView = [UIAlertView new];
-//	alertView.title = title;
-//	alertView.message = message;
-//	[alertView addButtonWithTitle:buttonText];
-//	[alertView show];
-//	NSLog(@"%@, %@", title, message);
-//}
 
 - (NSManagedObjectContext *)managedObjectContext
 {
