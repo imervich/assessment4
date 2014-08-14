@@ -7,6 +7,11 @@
 //
 
 #import "AddDogViewController.h"
+#import "AppDelegate.h"
+#import "Dog.h"
+#import "Person.h"
+
+#define dogEntity @"Dog"
 
 @interface AddDogViewController ()
 
@@ -26,10 +31,51 @@
     self.title = @"Add Dog";
 }
 
+#pragma mark - IBActions
+
 - (IBAction)onPressedUpdateDog:(UIButton *)sender
 {
+	Dog *dog = [NSEntityDescription insertNewObjectForEntityForName:dogEntity inManagedObjectContext:[self managedObjectContext]];
+	dog.name = self.nameTextField.text;
+	dog.breed = self.breedTextField.text;
+	dog.color = self.colorTextField.text;
+
+	[self.dogOwner addDogsObject:dog];
+
+	[self saveContext];
+
+	// tell the DogsVC that a dog was added to its owner
+	[self.delegate addedDog:dog toPerson:self.dogOwner];
 
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Helper methods
+
+- (void)saveContext
+{
+	NSError *saveError;
+	[[self managedObjectContext] save:&saveError];
+
+	if (saveError) {
+		[self showAlertViewWithTitle:@"Saving dog error" message:saveError.localizedDescription buttonText:@"OK"];
+		NSLog(@"Saving dog error: %@", saveError.localizedDescription);
+	}
+}
+
+- (void)showAlertViewWithTitle:(NSString *)title message:(NSString *)message buttonText:(NSString *)buttonText
+{
+	UIAlertView *alertView = [UIAlertView new];
+	alertView.title = title;
+	alertView.message = message;
+	[alertView addButtonWithTitle:buttonText];
+	[alertView show];
+	NSLog(@"%@, %@", title, message);
+}
+
+- (NSManagedObjectContext *)managedObjectContext
+{
+	return ((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext;
 }
 
 @end
