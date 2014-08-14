@@ -56,10 +56,10 @@
 	// tell the DogsVC that a dog was added to its owner
 	if (isAdding) {
 		[self.delegate addedDog:self.dog toPerson:self.dogOwner];
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"ChangeColorNotification" object:nil];
 	} else {
 		[self.delegate editedDog:self.dog];
 	}
-
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

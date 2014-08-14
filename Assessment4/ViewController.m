@@ -51,6 +51,8 @@
 		UIColor *savedColor = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
 		self.navigationController.navigationBar.tintColor = savedColor;
 	}
+
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeColor:) name:@"ChangeColorNotification" object:nil];
 }
 
 #pragma mark - UITableViewDataSource Methods
@@ -183,10 +185,17 @@
 		NSIndexPath *indexPathForSelectedRow = [self.myTableView indexPathForSelectedRow];
 		dogsVC.dogOwner = [self.fetchedResultsController objectAtIndexPath:indexPathForSelectedRow];
 	}
+}
 
+#pragma mark - Notifications
+
+- (void)changeColor:(NSNotification *)notification
+{
+	self.navigationItem.rightBarButtonItem.tintColor = [UIColor redColor];
 }
 
 #pragma mark - Helper methods
+
 
 - (void)showAlertViewWithTitle:(NSString *)title message:(NSString *)message buttonText:(NSString *)buttonText
 {
