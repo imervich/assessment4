@@ -43,6 +43,28 @@
 	if (fetchError) {
 		[self showAlertViewWithTitle:@"User fetch error" message:fetchError.localizedDescription buttonText:@"OK"];
 	}
+
+
+	// load the color
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	NSData *colorData = [userDefaults objectForKey:@"savedColor"];
+	if (colorData) {
+		UIColor *savedColor = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+		self.navigationController.navigationBar.tintColor = savedColor;
+	}
+
+
+//	NSDictionary *colorRGBA = [userDefaults objectForKey:@"savedColor"];
+
+//	if (colorRGBA) {
+//		CGFloat red = [colorRGBA[@"red"] floatValue];
+//		CGFloat green = [colorRGBA[@"green"] floatValue];
+//		CGFloat blue = [colorRGBA[@"blue"] floatValue];
+//		CGFloat alpha = [colorRGBA[@"alpha"] floatValue];
+//
+//		UIColor *savedColor = [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
+//		self.navigationController.navigationBar.tintColor = savedColor;
+//	}
 }
 
 #pragma mark - UITableViewDataSource Methods
@@ -94,23 +116,50 @@
     }
     else if (alertView == self.colorAlert)
     {
+		UIColor *colorToSave;
         //TODO: SAVE USER'S DEFAULT COLOR PREFERENCE USING THE CONDITIONAL BELOW
             if (buttonIndex == 0)
             {
                 self.navigationController.navigationBar.tintColor = [UIColor purpleColor];
+				colorToSave = [UIColor purpleColor];
             }
             else if (buttonIndex == 1)
             {
                 self.navigationController.navigationBar.tintColor = [UIColor blueColor];
+				colorToSave = [UIColor blueColor];
             }
             else if (buttonIndex == 2)
             {
                 self.navigationController.navigationBar.tintColor = [UIColor orangeColor];
+				colorToSave = [UIColor orangeColor];
             }
             else if (buttonIndex == 3)
             {
                 self.navigationController.navigationBar.tintColor = [UIColor greenColor];
+				colorToSave = [UIColor greenColor];
             }
+
+//		CGFloat red;
+//		CGFloat green;
+//		CGFloat blue;
+//		CGFloat alpha;
+
+//		UIColor *colorToSave = self.navigationController.navigationBar.tintColor;
+
+		// get the color's rgb values
+//		if ([colorToSave getRed:&red green:&green blue:&blue alpha:&alpha]) {
+//
+//			NSDictionary *colorRGBA = @{@"red": [NSNumber numberWithFloat:red],
+//									 @"green": [NSNumber numberWithFloat:green],
+//									 @"blue": [NSNumber numberWithFloat:blue],
+//									 @"alpha": [NSNumber numberWithFloat:alpha]};
+//
+		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+		//			[userDefaults setObject:colorRGBA forKey:@"savedColor"];
+//		}
+		NSData *colorData = [NSKeyedArchiver archivedDataWithRootObject:colorToSave];
+		[userDefaults setObject:colorData forKey:@"savedColor"];
+		[userDefaults synchronize];
     }
     else
     {
