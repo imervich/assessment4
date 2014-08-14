@@ -48,13 +48,12 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //TODO: UPDATE THIS ACCORDINGLY
     return [self.fetchedResultsController.sections[section] numberOfObjects];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myCell"];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:mmCellIdentifier];
 	Person *person = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	
 	cell.textLabel.text = person.name;
@@ -86,7 +85,6 @@
 
         if (buttonIndex != alertView.cancelButtonIndex)
         {
-			//TODO: ADD YOUR CODE HERE FOR WHEN USER ADDS NEW PERSON
 			Person *newPerson = [NSEntityDescription insertNewObjectForEntityForName:personEntity inManagedObjectContext:self.managedObjectContext];
 			newPerson.name = [alertView textFieldAtIndex:0].text;
 
