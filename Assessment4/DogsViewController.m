@@ -33,6 +33,7 @@
     return self.dogOwner.dogs.count;
 }
 
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DogTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: mmDogCellIdentifier];
@@ -42,6 +43,20 @@
 	[cell showDogData];
 
     return cell;
+}
+
+#pragma mark - UITableViewDelegate Methods
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if (editingStyle == UITableViewCellEditingStyleDelete) {
+		Dog *dog = self.dogOwner.dogs.allObjects[indexPath.row];
+
+		[[self managedObjectContext] deleteObject:(NSManagedObject *)dog];
+		[self saveContext];
+		[self.dogsTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+
+	}
 }
 
 #pragma mark - Navigation
@@ -76,6 +91,27 @@
 }
 
 #pragma mark - Helper methods
+
+- (void)saveContext
+{
+	NSError *saveError;
+	[[self managedObjectContext] save:&saveError];
+
+	if (saveError) {
+		[self showAlertViewWithTitle:@"Saving dog error" message:saveError.localizedDescription buttonText:@"OK"];
+		NSLog(@"Saving dog error: %@", saveError.localizedDescription);
+	}
+}
+
+- (void)showAlertViewWithTitle:(NSString *)title message:(NSString *)message buttonText:(NSString *)buttonText
+{
+	UIAlertView *alertView = [UIAlertView new];
+	alertView.title = title;
+	alertView.message = message;
+	[alertView addButtonWithTitle:buttonText];
+	[alertView show];
+	NSLog(@"%@, %@", title, message);
+}
 
 - (NSManagedObjectContext *)managedObjectContext
 {

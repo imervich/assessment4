@@ -38,7 +38,6 @@
 	BOOL isAdding;
 	if (!self.dog) {
 		isAdding = YES;
-		NSLog(@"Adding dog");
 		self.dog = [NSEntityDescription insertNewObjectForEntityForName:dogEntity inManagedObjectContext:[self managedObjectContext]];
 		self.dog.name = self.nameTextField.text;
 		self.dog.breed = self.breedTextField.text;
@@ -49,8 +48,6 @@
 		self.dog.name = self.nameTextField.text;
 		self.dog.breed = self.breedTextField.text;
 		self.dog.color = self.colorTextField.text;
-
-		NSLog(@"editing dog!");
 	}
 
 	[self.dogOwner addDogsObject:self.dog];
