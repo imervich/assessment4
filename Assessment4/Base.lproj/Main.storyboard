@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="85p-hk-y4j">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="85p-hk-y4j">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -17,8 +17,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Zcc-cg-WcJ">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="505"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="myCell" id="Gxz-E4-3HY">
@@ -38,6 +37,16 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="C1D-qm-GlA"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6FZ-6u-P2o">
+                                <rect key="frame" x="136" y="518" width="48" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Stuck?">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedPresentStuckBox:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="pb0-7m-FEg"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -54,6 +63,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addBarButtonItem" destination="fQY-8c-QOZ" id="SU6-zo-9Nc"/>
                         <outlet property="myTableView" destination="Zcc-cg-WcJ" id="Zut-5F-try"/>
                     </connections>
                 </viewController>
@@ -75,7 +85,6 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="1Vg-co-d7m">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="dogCell" id="lgF-6S-K6i">
@@ -85,6 +94,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="Iyy-aM-B6A" kind="modal" identifier="DogDetailSegue" id="7tg-ct-ULM"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -98,7 +110,7 @@
                     <navigationItem key="navigationItem" id="TH6-Yu-G9j">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="bWi-5V-qux">
                             <connections>
-                                <segue destination="Iyy-aM-B6A" kind="push" identifier="toAddDogSegue" id="XyB-YK-gAB"/>
+                                <segue destination="Iyy-aM-B6A" kind="modal" identifier="AddDogSegue" id="XyB-YK-gAB"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -110,10 +122,10 @@
             </objects>
             <point key="canvasLocation" x="1152" y="235"/>
         </scene>
-        <!--View Controller-->
+        <!--Add Dog View Controller-->
         <scene sceneID="bYx-Mm-O5H">
             <objects>
-                <viewController id="Iyy-aM-B6A" sceneMemberID="viewController">
+                <viewController id="Iyy-aM-B6A" customClass="AddDogViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Aq4-Ma-ixv"/>
                         <viewControllerLayoutGuide type="bottom" id="1j3-g1-0ji"/>
@@ -121,9 +133,44 @@
                     <view key="view" contentMode="scaleToFill" id="Dmv-ZH-i4J">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lbt-Dt-I5F">
+                                <rect key="frame" x="263" y="168" width="34" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Save">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedUpdateDog:" destination="Iyy-aM-B6A" eventType="touchUpInside" id="7tc-XP-Tav"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0hX-8l-gmo">
+                                <rect key="frame" x="28" y="119" width="199" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Breed" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Slm-2W-S66">
+                                <rect key="frame" x="28" y="168" width="199" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Color" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nWd-Qa-Gqa">
+                                <rect key="frame" x="28" y="220" width="199" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="2Oq-fa-Xnu"/>
+                    <connections>
+                        <outlet property="breedTextField" destination="Slm-2W-S66" id="wNl-eE-4c5"/>
+                        <outlet property="colorTextField" destination="nWd-Qa-Gqa" id="16R-yC-g4m"/>
+                        <outlet property="nameTextField" destination="0hX-8l-gmo" id="tE2-Mo-e14"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ich-dW-O1g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -153,4 +200,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="XyB-YK-gAB"/>
+    </inferredMetricsTieBreakers>
 </document>
