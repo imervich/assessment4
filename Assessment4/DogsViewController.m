@@ -48,16 +48,29 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+	AddDogViewController *addDVC = segue.destinationViewController;
+	addDVC.delegate = self;
+	addDVC.dogOwner = self.dogOwner;
+
 	if ([segue.identifier isEqualToString:mmAddSegue]) {
-		AddDogViewController *addDVC = segue.destinationViewController;
-		addDVC.delegate = self;
-		addDVC.dogOwner = self.dogOwner;
+		addDVC.dog = nil;
+	} else if ([segue.identifier isEqualToString:mmEditSegue]) {
+
+		// set the dog to edit
+		NSIndexPath *indexPath = self.dogsTableView.indexPathForSelectedRow;
+		Dog *dog = self.dogOwner.dogs.allObjects[indexPath.row];
+		addDVC.dog = dog;
 	}
 }
 
 #pragma mark - AddDogViewControllerDelegate
 
 - (void)addedDog:(Dog *)dog toPerson:(Person *)person
+{
+	[self.dogsTableView reloadData];
+}
+
+- (void)editedDog:(Dog *)dog
 {
 	[self.dogsTableView reloadData];
 }

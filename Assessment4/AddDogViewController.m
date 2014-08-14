@@ -35,17 +35,33 @@
 
 - (IBAction)onPressedUpdateDog:(UIButton *)sender
 {
-	Dog *dog = [NSEntityDescription insertNewObjectForEntityForName:dogEntity inManagedObjectContext:[self managedObjectContext]];
-	dog.name = self.nameTextField.text;
-	dog.breed = self.breedTextField.text;
-	dog.color = self.colorTextField.text;
+	BOOL isAdding;
+	if (!self.dog) {
+		isAdding = YES;
+		NSLog(@"Adding dog");
+		self.dog = [NSEntityDescription insertNewObjectForEntityForName:dogEntity inManagedObjectContext:[self managedObjectContext]];
+		self.dog.name = self.nameTextField.text;
+		self.dog.breed = self.breedTextField.text;
+		self.dog.color = self.colorTextField.text;
 
-	[self.dogOwner addDogsObject:dog];
+		[self.dogOwner addDogsObject:self.dog];
+	} else {
+		self.dog.name = self.nameTextField.text;
+		self.dog.breed = self.breedTextField.text;
+		self.dog.color = self.colorTextField.text;
 
+		NSLog(@"editing dog!");
+	}
+
+	[self.dogOwner addDogsObject:self.dog];
 	[self saveContext];
 
 	// tell the DogsVC that a dog was added to its owner
-	[self.delegate addedDog:dog toPerson:self.dogOwner];
+	if (isAdding) {
+		[self.delegate addedDog:self.dog toPerson:self.dogOwner];
+	} else {
+		[self.delegate editedDog:self.dog];
+	}
 
     [self dismissViewControllerAnimated:YES completion:nil];
 }

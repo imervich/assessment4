@@ -12,6 +12,8 @@
 @interface DogsViewController : UIViewController
 
 #define mmAddSegue @"AddDogSegue"
+#define mmEditSegue @"DogDetailSegue"
+
 #define mmDogCellIdentifier @"dogCell"
 
 @property Person *dogOwner;

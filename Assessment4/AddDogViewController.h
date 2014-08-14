@@ -14,6 +14,7 @@
 @protocol AddDogViewControllerDelegate
 
 - (void)addedDog:(Dog *)dog toPerson:(Person *)person;
+- (void)editedDog:(Dog *)dog;
 
 @end
 
@@ -21,5 +22,7 @@
 
 @property Person *dogOwner;
 @property id<AddDogViewControllerDelegate> delegate;
+
+@property Dog *dog;
 
 @end
